@@ -56,11 +56,11 @@ public abstract class AbstractStateWrapper implements Runnable {
         LOGGER.debug("state change, current state is {}, next state is {}", currentState, nextState);
         Pair<State, State> statePair = new ImmutablePair<>(currentState, nextState);
         StateCallback callback = callBacks.get(statePair);
-        // change state before callback.
-        currentState = nextState;
         if (callback != null) {
             callback.call(currentState, nextState);
         }
+        // change state after callback.
+        currentState = nextState;
     }
 
     /**
